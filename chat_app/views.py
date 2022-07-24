@@ -64,12 +64,13 @@ def getCarByQuery(query="",car_name="",price="",engine=""):
 @api_view(["GET"])
 def go_toAPIView(request):
     go_to = request.GET.get("go_to","default")
-
+    
     data={
             "entries":[
             {
-                    "template_type":"message",
-                    "message": go_to
+                "template_type":"go_to",
+                "go_to_blocks": [go_to], 
+                "execution_type": "sequentially"
             }
         ]
     }
