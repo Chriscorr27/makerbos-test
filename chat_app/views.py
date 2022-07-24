@@ -1,3 +1,4 @@
+import random
 from django.http import JsonResponse
 from django.shortcuts import render
 from  rest_framework.decorators import *
@@ -29,14 +30,7 @@ def format_carousals(cars):
 				]
 	}
 
-
-def carousalAPIView(request):
-    query = request.GET.get('query',"")
-    car_name = request.GET.get('car_name',"")
-    price = request.GET.get('price',"")
-    engine = request.GET.get('engine',"")
-    data ={}
-    cars = getData().get("Cardetails",[])
+def getCarByQuery(query="",car_name="",price="",engine=""):
     if query=="" or query.lower()=="all" :
         if car_name!="":
             cars = [c for c in cars if car_name.lower() in c["car_name"].lower()]
@@ -64,5 +58,130 @@ def carousalAPIView(request):
                     cars = [c for c in cars if int(value) > c[field]]
                 elif opr.lower()=="lte":
                     cars = [c for c in cars if int(value) >= c[field]]
+    return cars
+
+@api_view(["GET"])
+def carousalAPIView(request):
+    query = request.GET.get('query',"")
+    car_name = request.GET.get('car_name',"")
+    price = request.GET.get('price',"")
+    engine = request.GET.get('engine',"")
+    data ={}
+    cars = getCarByQuery(query,car_name,price,engine)
     data =  format_carousals(cars)
+    return JsonResponse(data,status=200)
+
+@api_view(["GET"])
+def videoAPIView(request):
+    query = request.GET.get.get("query","")
+    car_name = request.GET.get('car_name',"")
+    price = request.GET.get('price',"")
+    engine = request.GET.get('engine',"")
+    data ={}
+    cars = getCarByQuery(query,car_name,price,engine)
+    if cars:
+        index = random.randint(0,len(cars)-1)
+        car = cars[index]
+        data = {
+            "entries":[
+                {
+                    "template_type":"video", 
+                    "url":car["video"],
+                }
+            ]
+        }
+    else:
+        data =  {
+                "entries":[
+                    {
+                    "template_type":"message",
+                    "message": "no Videos found"
+                    }
+                ]
+            }
+    return JsonResponse(data,status=200)
+
+@api_view(["GET"])
+def buttonAPIView(request):
+    query = request.GET.get.get("query","")
+    car_name = request.GET.get('car_name',"")
+    price = request.GET.get('price',"")
+    engine = request.GET.get('engine',"")
+    data ={}
+    cars = getCarByQuery(query,car_name,price,engine)
+    if car:
+        index = random.randint(0,len(cars)-1)
+        car = car[index]
+        data =  {
+            "entries":[
+                {
+                    "template_type":"message",
+                    "message":"click the below button to view the demo.",
+                    "buttons":[  
+                        {
+                            "type":"url",
+                            "url":car["img"],
+                            "webview_height":"new", 
+                            "title":"Preview"
+                        },
+                        {
+                            "type":"url",
+                            "url":car["video"],
+                            "webview_height":"full",
+                            "title":"Preview"
+                        }
+                    ]
+                }
+            ]
+        }
+    else:
+        data =  {
+            "entries":[
+                {
+                    "template_type":"message",
+                    "message":"No Car found",
+                }
+            ]
+        }
+    return JsonResponse(data,status=200)
+
+@api_view(["GET"])
+def sendmessageAPIView(request):
+    query = request.GET.get.get("query","")
+    car_name = request.GET.get('car_name',"")
+    price = request.GET.get('price',"")
+    engine = request.GET.get('engine',"")
+    data ={}
+    cars = getCarByQuery(query,car_name,price,engine)
+    if cars:
+        index = random.randint(0,len(cars)-1)
+        car = cars[index]
+        data = {
+                "entries":[
+                    {
+                        "template_type":"message",
+                        "message":car["car_name"]+" cost " + car["price"]+" Lakh "+"({})".format(car["engine"]),
+                    }
+                ]
+            }
+    else:
+        data = {
+            "entries":[{
+                "template_type":"message",
+                "message":"Car not found",
+            }]
+        }
+    return JsonResponse(data,status=200)
+
+@api_view(["GET"])
+def attributeAPIView(request):
+    attr = request.GET.get('attr',"")
+    data = {
+        "entries":[{
+            "template_type":"set_attr",
+            "attributes":[
+                {"attribute":"attr", "value": attr}
+                ]
+        }]
+    }
     return JsonResponse(data,status=200)
