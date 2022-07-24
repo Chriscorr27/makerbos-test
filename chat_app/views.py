@@ -133,19 +133,19 @@ def buttonAPIView(request):
             "entries":[
                 {
                     "template_type":"message",
-                    "message":"click the below button to view the demo.",
+                    "message":car["car_name"]+" cost " + car["price"]+" Lakh "+"({})".format(car["engine"])+"\nclick the below button to view the car preview.",
                     "buttons":[  
                         {
                             "type":"url",
                             "url":car["img"],
                             "webview_height":"new", 
-                            "title":"Preview"
+                            "title":"Preview img"
                         },
                         {
                             "type":"url",
                             "url":car["video"],
                             "webview_height":"full",
-                            "title":"Preview"
+                            "title":"Preview video"
                         }
                     ]
                 }
