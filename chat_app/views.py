@@ -10,6 +10,14 @@ def format_carousals(cars):
 				"title":i["car_name"],
 				"subtitle":i["car_name"] +" "+ str(i["price"])+" Lakh "+"({})".format(i["engine"]),
 				"image_url":i["img"],
+                "buttons":[ 
+                    {
+                    "type":"url",
+                    "url":i["img"],
+                    "webview_height":"new",
+                    "title":"Preview"
+                    }
+                ]
 				})
 	return {
 		"entries":[
