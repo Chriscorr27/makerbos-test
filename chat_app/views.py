@@ -128,7 +128,7 @@ def buttonAPIView(request):
     cars = getCarByQuery(query,car_name,price,engine)
     if cars:
         index = random.randint(0,len(cars)-1)
-        car = car[index]
+        car = cars[index]
         data =  {
             "entries":[
                 {
