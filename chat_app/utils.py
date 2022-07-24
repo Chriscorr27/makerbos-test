@@ -16,4 +16,4 @@ data = {
 }
 
 def getData():
-    return data
+    return data["Cardetails"]

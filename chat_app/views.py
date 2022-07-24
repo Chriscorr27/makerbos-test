@@ -31,6 +31,7 @@ def format_carousals(cars):
 	}
 
 def getCarByQuery(query="",car_name="",price="",engine=""):
+    cars = getData()
     if query=="" or query.lower()=="all" :
         if car_name!="":
             cars = [c for c in cars if car_name.lower() in c["car_name"].lower()]
@@ -73,7 +74,7 @@ def carousalAPIView(request):
 
 @api_view(["GET"])
 def videoAPIView(request):
-    query = request.GET.get.get("query","")
+    query = request.GET.get("query","")
     car_name = request.GET.get('car_name',"")
     price = request.GET.get('price',"")
     engine = request.GET.get('engine',"")
@@ -103,7 +104,7 @@ def videoAPIView(request):
 
 @api_view(["GET"])
 def buttonAPIView(request):
-    query = request.GET.get.get("query","")
+    query = request.GET.get("query","")
     car_name = request.GET.get('car_name',"")
     price = request.GET.get('price',"")
     engine = request.GET.get('engine',"")
@@ -147,7 +148,7 @@ def buttonAPIView(request):
 
 @api_view(["GET"])
 def sendmessageAPIView(request):
-    query = request.GET.get.get("query","")
+    query = request.GET.get("query","")
     car_name = request.GET.get('car_name',"")
     price = request.GET.get('price',"")
     engine = request.GET.get('engine',"")
