@@ -69,7 +69,7 @@ def go_toAPIView(request):
             "entries":[
             {
                 "template_type":"go_to",
-                "go_to_blocks": [go_to], 
+                "go_to_blocks": ["Welcome",go_to], 
                 "execution_type": "sequentially"
             }
         ]
