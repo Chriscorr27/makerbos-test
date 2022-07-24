@@ -62,6 +62,19 @@ def getCarByQuery(query="",car_name="",price="",engine=""):
     return cars
 
 @api_view(["GET"])
+def jsonAPIView(request):
+    data={
+            "entries":[
+            {
+            "template_type":"json_api",
+            "method":"GET",
+            "url": "http://chris2001.pythonanywhere.com/api/video/?query=price__lt=40"
+            }
+        ]
+    }
+    return JsonResponse(data,status=200)
+
+@api_view(["GET"])
 def carousalAPIView(request):
     query = request.GET.get('query',"")
     car_name = request.GET.get('car_name',"")
