@@ -133,7 +133,7 @@ def buttonAPIView(request):
             "entries":[
                 {
                     "template_type":"message",
-                    "message":car["car_name"]+" cost " + car["price"]+" Lakh "+"({})".format(car["engine"])+"\nclick the below button to view the car preview.",
+                    "message":car["car_name"]+" cost " + str(car["price"])+" Lakh "+"({})".format(str(car["engine"]))+"\nclick the below button to view the car preview.",
                     "buttons":[  
                         {
                             "type":"url",
