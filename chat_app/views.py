@@ -62,13 +62,14 @@ def getCarByQuery(query="",car_name="",price="",engine=""):
     return cars
 
 @api_view(["GET"])
-def jsonAPIView(request):
+def go_toAPIView(request):
+    go_to = request.GET.get("go_to","default")
     data={
             "entries":[
             {
-            "template_type":"json_api",
-            "method":"GET",
-            "url": "http://chris2001.pythonanywhere.com/api/video/?query=price__lt=40"
+                "template_type":"go_to",
+                "go_to_blocks": [go_to], 
+                "execution_type": "sequentially"
             }
         ]
     }
