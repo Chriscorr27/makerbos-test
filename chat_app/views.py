@@ -1,9 +1,13 @@
 import json
 import random
+from xml.sax import xmlreader
 from django.http import JsonResponse
 from django.shortcuts import render
 from  rest_framework.decorators import *
 from .utils import *
+import requests as req
+from .models import *
+import xmltodict
 
 def format_carousals(cars):								
 	slides = []								
@@ -193,17 +197,54 @@ def sendmessageAPIView(request):
 
 @api_view(["GET"])
 def carBrandsAPIView(request):
-    attr = request.GET.get('car_type',"")
-    data = [
-    {"__display":"Audi", "code":"audi" },
-    {"__display":"BWM", "code":"bwm" },
-    {"__display":"Honda", "code":"honda" },
-    {"__display":"KIA", "code":"kia" },
-    {"__display":"Ford", "code":"ford" },
-    {"__display":"Volvo", "code":"volvo" },
-    {"__display":"Hyundai", "code":"hyundai" },
-    {"__display":"Jaguar", "code":"jaguar" },
-    {"__display":"Toyota", "code":"toyota" },
-    {"__display":"Tata", "code":"tata" }
-]
+    car_type = request.GET.get('car_type',"")
+    data=[]
+    if car_type=="new":
+        cars_brand = CarModel.objects.filter(year__gte=2015).values('brand').distinct()
+        # print(cars_brand)
+        for brand in cars_brand:
+            data.append( {"__display":brand["brand"], "code":brand["brand"].lower() },)
+    elif car_type=="old":
+        cars_brand = CarModel.objects.filter(year__lte=2015).values('brand').distinct()
+        # print(cars_brand)
+        for brand in cars_brand:
+            data.append( {"__display":brand["brand"], "code":brand["brand"].lower() },)
     return JsonResponse(data,status=200,safe=False)
+
+@api_view(["GET"])
+def collectCars(request):
+    headers = {
+        "X-RapidAPI-Key": "55b6689c46msh94bae1227dbe83dp1b4268jsnb7b812a6f9fd",
+        "X-RapidAPI-Host": "car-data.p.rapidapi.com"
+    }
+    url = "https://car-data.p.rapidapi.com/cars"
+    querystring = {"limit":"10","page":"0","year":"2010","make":"BMW"}
+    response = req.request("GET", url, headers=headers,params=querystring)
+    data = json.loads(response.text)
+    print(data)
+    seats_list = [5,7]
+    count =0
+    for d in data:
+        if  count<7:
+            req_url ="http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm={}+{}+{}".format(d["make"],d["model"],d["year"])
+            img_res = req.request("GET",req_url , headers=headers,params=querystring)
+            img_res = xmltodict.parse(img_res.text)
+            image = img_res["string"]["#text"]
+            # print(image)
+            seats = random.randint(0,1)
+            seats = seats_list[seats]
+            engine = random.randint(1800,2000)
+            price = 0
+            # image = ""
+            if seats==5:
+                price = round(random.randint(120,240)*100/3)/100
+            elif seats==7:
+                price = round(random.randint(180,330)*100/3)/100
+            else:
+                price = round(random.randint(45,80)*100/3)/100
+            price = round(price*0.65*100)/100
+            car = CarModel(year=d["year"],brand=d["make"],model=d["model"],
+            type=d["type"][0],price=price,engine=engine,seats=seats,image=image)
+            # car.save()
+            count+=1
+    return JsonResponse({"msg":"collected"},status=200,safe=False)
