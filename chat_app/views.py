@@ -199,4 +199,4 @@ def attributeAPIView(request):
     {"__display":"US", "code":"+1" },
     {"__display":"China", "code":"+86" }
 ]
-    return JsonResponse(data,status=200)
+    return JsonResponse(data,status=200,safe=False)
