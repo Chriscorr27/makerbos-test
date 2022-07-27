@@ -360,7 +360,7 @@ def bookApointmentAPIView(request):
         "entries":[
                     {
                         "template_type":"message",
-                        "message":"Booking successfully done\nBooking details:\nName : {}\nPhone : {}\nEmail : {}\nDate : {}".format(name,phone,email,date),
+                        "message":"Booking successfully done<br>Booking details:<br>Name : {}<br>Phone : {}<br>Email : {}<br>Date : {}".format(name,phone,email,date),
                         "buttons":[ 
                         {
                         "type":"url",
