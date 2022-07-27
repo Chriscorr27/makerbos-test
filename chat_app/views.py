@@ -14,7 +14,8 @@ import xmltodict
 def format_carousals(cars,page=0,total=0):								
     slides = []								
     for car in cars:	
-        i =  car.toJson()					
+        i =  car.toJson()	
+        detail_card = "<img src='http://www.regcheck.org.uk/image.aspx/@Qk1XIFgzIDIwMjA=' style='background-color: rgb(156, 154, 154);'  class='card-img-top' alt='...'><h3 >Card title</h3><p >Some quick example text to build on the card title and make up the bulk of the card's content.</p>"				
         slides.append({						
             "title":i["brand"]+" "+i["model"] ,
             "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
@@ -50,10 +51,8 @@ def format_carousals(cars,page=0,total=0):
             ]
         },
         {
-            "template_type":"image",
-            "url":"http://www.regcheck.org.uk/image.aspx/@Qk1XIFgzIDIwMjA=",
-            "background_color": "#fff",
-            "caption": "ok"
+            "template_type":"message",
+            "message":detail_card,
         }
         ]
     }
