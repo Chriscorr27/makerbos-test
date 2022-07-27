@@ -11,7 +11,8 @@ import xmltodict
 
 def getCarDetail(car):
     i =  car.toJson()	
-    detail_card = "<img src='{}' style='background-color: rgb(156, 154, 154);'  class='card-img-top' alt='...'><h3 >{}</h3><p >{}</p>".format(i["image"],i["brand"]+" "+i["model"],str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]))
+    desc = "Citroen C3 is a 5 seater Hatchback available in a price range of ₹ 5.71 - 8.06 Lakh. It is available in 6 variants, 1198 to 1199 cc engine options and 1 transmission option : Manual. Other key specifications of the C3 include a Ground Clearance of 180 mm, Kerb Weight of 939 kg and Bootspace of 315 litres. The C3 is available in 10 colours. The mileage of C3 ranges from 19.4 kmpl to 19.8 kmpl."
+    detail_card = "<img src='{}' style='background-color: rgb(156, 154, 154);'  class='card-img-top' alt='...'><h3 >{}</h3><p >{}</p><br><p >{}</p>".format(i["image"],i["brand"]+" "+i["model"],str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),desc)
     return detail_card			
 
 
