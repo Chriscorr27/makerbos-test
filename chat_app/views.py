@@ -30,11 +30,7 @@ def format_carousals(cars,isNext=False,isprev=False):
             })
     return {
         "entries":[
-        {
-        "template_type":"carousel",
-        "shadow":True,
-        "slides":slides	
-        },
+      
         {
             "template_type": "quick_reply",
             "attribute": "page_op",
