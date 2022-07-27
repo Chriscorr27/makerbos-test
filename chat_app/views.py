@@ -11,7 +11,7 @@ import xmltodict
 
 
 
-def format_carousals(cars,isNext=False,isprev=False):								
+def format_carousals(cars,page=0,total=0):								
     slides = []								
     for car in cars:	
         i =  car.toJson()					
@@ -30,16 +30,14 @@ def format_carousals(cars,isNext=False,isprev=False):
             })
     return {
         "entries":[
-      
         {
-            "template_type": "quick_reply",
-            "attribute": "page_op",
-            "display_vertical": True,
-            "invalid":False,
-            "quick_reply": [
-                {"name": "Next", "next_states": []}, 
-                {"name": "Prev", "next_states": []}
-            ]
+        "template_type":"carousel",
+        "shadow":True,
+        "slides":slides	
+        },
+        {
+            "template_type":"message",
+            "message":"{} / {} page".format(page,total)
 
         }
         ]
@@ -246,16 +244,21 @@ def carListAPIView(request):
     data=[]
     start_index = limit*(page-1)
     end_index = limit*(page)
+    total_page = 0
     if car_type=="new":
         car_data = CarModel.objects.filter(year__gte=2015,brand=car_brand)
         # print(len(car_brand))
         data = car_data[start_index:end_index]
+        total_page = len(car_data)/4
+        total_page = total_page if total_page%4==0 else int(total_page)+1
     elif car_type=="old":
         car_data = CarModel.objects.filter(year__lte=2015,brand=car_brand)
         # print(len(car_data))
         data = car_data[start_index:end_index]
+        total_page = len(car_data)/4
+        total_page = total_page if total_page%4==0 else int(total_page)+1
         # print(len(data))
-    data = format_carousals(data)
+    data = format_carousals(data,page,total_page)
     return JsonResponse(data,status=200,safe=False)
 
 @api_view(["GET"])
