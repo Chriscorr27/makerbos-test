@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env(env_file='prod.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -102,6 +106,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'transcriptbackend@gmail.com'
+EMAIL_HOST_PASSWORD="pnauagimwfnxocap"
+# EMAIL_HOST_PASSWORD = ""
+# Djunicode@22
+# EMAIL_HOST_PASSWORD = '062021_LoftOfSpace.com'
+EMAIL_PORT = 587
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

@@ -1,12 +1,16 @@
 import json
 import random
 from xml.sax import xmlreader
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
 from  rest_framework.decorators import *
 from .utils import *
 import requests as req
 from .models import *
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 import xmltodict
 
 def getCarDetail(car):
@@ -333,4 +337,23 @@ def carDetailAPIView(request):
                     }
                 ]
             }
+    return JsonResponse(data,status=200,safe=False)
+
+@api_view(["GET"])
+def bookApointmentAPIView(request):
+    name = request.GET.get('name',"")
+    phone = request.GET.get('phone',"")
+    email = request.GET.get('email',"")
+    date = request.GET.get('date',"")
+    html_content = render_to_string("after_booking.html", {
+                                                "name": name, "email": email,"phone": phone, "date": date, })
+    text_content = strip_tags(html_content)
+    email_obj = EmailMultiAlternatives(
+        "Car Appointment",
+        text_content,
+        settings.EMAIL_HOST_USER,
+        [email]
+    )
+    email_obj.attach_alternative(html_content, "text/html")
+    email_obj.send()
     return JsonResponse(data,status=200,safe=False)
