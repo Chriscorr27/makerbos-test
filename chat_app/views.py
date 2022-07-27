@@ -32,7 +32,7 @@ def format_carousals(cars,page=0,total=0):
                 "attrs":[
                 {
                 "name":"car_id",
-                "value":"57"
+                "value":str(i["id"])
                 }
             ]
                 }
