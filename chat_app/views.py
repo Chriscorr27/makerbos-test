@@ -342,8 +342,8 @@ def carDetailAPIView(request):
 @api_view(["GET"])
 def bookApointmentAPIView(request):
     name = request.GET.get('name',"")
-    phone = request.GET.get('phone',"")
-    email = request.GET.get('email',"")
+    phone = request.GET.get('mobile_number',"")
+    email = request.GET.get('email_address',"")
     date = request.GET.get('date',"")
     html_content = render_to_string("after_booking.html", {
                                                 "name": name, "email": email,"phone": phone, "date": date, })
