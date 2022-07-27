@@ -29,7 +29,7 @@ def format_carousals(cars,page=0,total=0):
                 "type":"go_to",
                 "next_block":"car_deatil",
                 "title":"Detail",
-                "attrs":[
+                "set_attr":[
                     {
                     "attribute":"car_id",
                     "value":"60"
