@@ -26,10 +26,9 @@ def format_carousals(cars,page=0,total=0):
             "image_url":i["image"],
             "buttons":[ 
                 {
-                "type":"url",
-                "url":i["image"],
-                "webview_height":"new",
-                "title":"Preview"
+                "type":"go_to",
+                "next_block":"car_deatil",
+                "title":"Detail"
                 }
             ]
             })
