@@ -323,6 +323,13 @@ def carDetailAPIView(request):
                     {
                         "template_type":"message",
                         "message":getCarDetail(car),
+                        "buttons":[ 
+                        {
+                        "type":"go_to",
+                        "next_block":"BookApointment",
+                        "title":"Book Apointment",
+                        }
+                    ]
                     }
                 ]
             }
