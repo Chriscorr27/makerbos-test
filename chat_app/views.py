@@ -192,11 +192,18 @@ def sendmessageAPIView(request):
     return JsonResponse(data,status=200)
 
 @api_view(["GET"])
-def attributeAPIView(request):
-    attr = request.GET.get('attr',"")
+def carBrandsAPIView(request):
+    attr = request.GET.get('car_type',"")
     data = [
-    {"__display":"India", "code":"+91" },
-    {"__display":"US", "code":"+1" },
-    {"__display":"China", "code":"+86" }
+    {"__display":"Audi", "code":"audi" },
+    {"__display":"BWM", "code":"bwm" },
+    {"__display":"Honda", "code":"honda" },
+    {"__display":"KIA", "code":"kia" },
+    {"__display":"Ford", "code":"ford" },
+    {"__display":"Volvo", "code":"volvo" },
+    {"__display":"Hyundai", "code":"hyundai" },
+    {"__display":"Jaguar", "code":"jaguar" },
+    {"__display":"Toyota", "code":"toyota" },
+    {"__display":"Tata", "code":"tata" }
 ]
     return JsonResponse(data,status=200,safe=False)

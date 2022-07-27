@@ -8,5 +8,5 @@ urlpatterns = [
     path('video/',videoAPIView,name="video"),
     path('button/',buttonAPIView,name="button"),
     path('send_message/',sendmessageAPIView,name="send message"),
-    path('attribute/',attributeAPIView,name="attribute"),
+    path('car-brand/',carBrandsAPIView,name="car_brand"),
 ]
