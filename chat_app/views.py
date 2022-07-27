@@ -9,6 +9,8 @@ import requests as req
 from .models import *
 import xmltodict
 
+
+
 def format_carousals(cars,isNext=False,isprev=False):								
     slides = []								
     for car in cars:	
@@ -32,8 +34,18 @@ def format_carousals(cars,isNext=False,isprev=False):
         "template_type":"carousel",
         "shadow":True,
         "slides":slides	
+        },
+        {
+            "template_type": "quick_reply",
+            "attribute": "page_op",
+            "display_vertical": True,
+            "quick_reply": [
+                {"name": "Next", "next_states": []}, 
+                {"name": "Prev", "next_states": []}
+            ]
+
         }
-                ]
+        ]
     }
 
 def getCarByQuery(query="",car_name="",price="",engine=""):
