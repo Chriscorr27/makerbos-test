@@ -341,34 +341,40 @@ def carDetailAPIView(request):
 
 @api_view(["GET"])
 def bookApointmentAPIView(request):
+    car_id = request.GET.get('car_id',"")
     name = request.GET.get('name',"")
     phone = request.GET.get('mobile_number',"")
     email = request.GET.get('email_address',"")
     date = request.GET.get('date',"")
-    html_content = render_to_string("after_booking.html", {
-                                                "name": name, "email": email,"phone": phone, "date": date, })
-    text_content = strip_tags(html_content)
-    email_obj = EmailMultiAlternatives(
-        "Car Appointment",
-        text_content,
-        settings.EMAIL_HOST_USER,
-        [email]
-    )
-    email_obj.attach_alternative(html_content, "text/html")
-    email_obj.send()
-    data = {
-        "entries":[
-                    {
-                        "template_type":"message",
-                        "message":"Booking successfully done<br>Booking details:<br>Name : {}<br>Phone : {}<br>Email : {}<br>Date : {}".format(name,phone,email,date),
-                        "buttons":[ 
+    car = CarModel.objects.filter(id=car_id).first()
+    data = {}
+    if car:
+        car_json = car.toJson()
+        html_content = render_to_string("after_booking.html", {
+                                                    "name": name, "email": email,"phone": phone, "date": date, })
+        text_content = strip_tags(html_content)
+        email_obj = EmailMultiAlternatives(
+            "Car Appointment",
+            text_content,
+            settings.EMAIL_HOST_USER,
+            [email]
+        )
+        email_obj.attach_alternative(html_content, "text/html")
+        email_obj.send()
+        data = {
+            "entries":[
                         {
-                        "type":"url",
-                        "url":"https://mail.google.com/mail",
-                        "title":"Check Mail",
+                            "template_type":"message",
+                            "message":"Booking successfully done<br>Booking details:<br>Name : {}<br>Phone : {}<br>Email : {}<br>Date : {}".format(name,phone,email,date),
+                            "buttons":[ 
+                            {
+                            "type":"url",
+                            "url":"https://www.cardekho.com/carmodels/{}/{}".format(car_json["brand"],car_json["model"]),
+                            "webview_height":"new",
+                            "title":"Check Mail",
+                            }
+                        ]
                         }
                     ]
-                    }
-                ]
-    }
+        }
     return JsonResponse(data,status=200,safe=False)
