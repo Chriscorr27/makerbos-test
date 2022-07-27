@@ -10,5 +10,6 @@ urlpatterns = [
     path('send_message/',sendmessageAPIView,name="send message"),
     path('car-brand/',carBrandsAPIView,name="car_brand"),
     path('car-list/',carListAPIView,name="car_list"),
+    path('car-deatil/',carDetailAPIView,name="car_detail"),
     path('collect_data/',collectCars,name="collect_data"),
 ]

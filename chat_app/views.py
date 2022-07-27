@@ -9,13 +9,16 @@ import requests as req
 from .models import *
 import xmltodict
 
+def getCarDetail(car):
+    i =  car.toJson()	
+    detail_card = "<img src='{}' style='background-color: rgb(156, 154, 154);'  class='card-img-top' alt='...'><h3 >{}</h3><p >{}</p>".format(i["image"],i["brand"]+" "+i["model"],str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]))
+    return ""			
 
 
 def format_carousals(cars,page=0,total=0):								
     slides = []								
     for car in cars:	
         i =  car.toJson()	
-        detail_card = "<img src='http://www.regcheck.org.uk/image.aspx/@Qk1XIFgzIDIwMjA=' style='background-color: rgb(156, 154, 154);'  class='card-img-top' alt='...'><h3 >Card title</h3><p >Some quick example text to build on the card title and make up the bulk of the card's content.</p>"				
         slides.append({						
             "title":i["brand"]+" "+i["model"] ,
             "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
@@ -49,10 +52,6 @@ def format_carousals(cars,page=0,total=0):
                 "value":str(page)
                 }
             ]
-        },
-        {
-            "template_type":"message",
-            "message":detail_card,
         }
         ]
     }
@@ -304,3 +303,19 @@ def collectCars(request):
         car.brand = car.brand.lower()
         car.save()
     return JsonResponse({"msg":"collected"},status=200,safe=False)
+
+@api_view(["GET"])
+def carDetailAPIView(request):
+    car_id = request.GET.get('car_id',"")
+    data={}
+    car = CarModel.objects.filter(id=car_id).first()
+    if car:
+        data={
+                "entries":[
+                    {
+                        "template_type":"message",
+                        "message":getCarDetail(car),
+                    }
+                ]
+            }
+    return JsonResponse(data,status=200,safe=False)

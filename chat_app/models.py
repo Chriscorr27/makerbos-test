@@ -7,6 +7,7 @@ class CarModel(models.Model):
     brand = models.CharField(max_length=255)
     model = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
+    desc = models.TextField(default="")
     price = models.FloatField()
     engine = models.IntegerField()
     seats = models.IntegerField()
@@ -25,6 +26,7 @@ class CarModel(models.Model):
             "type":self.type,
             "price":self.price,
             "engine":self.engine,
+            "desc":self.desc,
             "seats":self.seats,
             "image":self.image,
         }
