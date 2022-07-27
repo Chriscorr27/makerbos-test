@@ -39,6 +39,7 @@ def format_carousals(cars,isNext=False,isprev=False):
             "template_type": "quick_reply",
             "attribute": "page_op",
             "display_vertical": True,
+            "invalid":False,
             "quick_reply": [
                 {"name": "Next", "next_states": []}, 
                 {"name": "Prev", "next_states": []}
