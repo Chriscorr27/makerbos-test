@@ -356,4 +356,19 @@ def bookApointmentAPIView(request):
     )
     email_obj.attach_alternative(html_content, "text/html")
     email_obj.send()
+    data = {
+        "entries":[
+                    {
+                        "template_type":"message",
+                        "message":"Booking successfully done\nBooking details:\nName : {}\nPhone : {}\nEmail : {}\nDate : {}".format(name,phone,email,date),
+                        "buttons":[ 
+                        {
+                        "type":"url",
+                        "url":"https://mail.google.com/mail/u/0/#inbox",
+                        "title":"Check Mail",
+                        }
+                    ]
+                    }
+                ]
+    }
     return JsonResponse(data,status=200,safe=False)
