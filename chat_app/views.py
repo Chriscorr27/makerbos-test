@@ -39,6 +39,15 @@ def format_carousals(cars,page=0,total=0):
             "template_type":"message",
             "message":"{} / {} page".format(page,total)
 
+        },
+        {
+            "template_type":"set_attr",
+            "attributes":[
+                {
+                "attribute":"page",
+                "value":str(page)
+                }
+            ]
         }
         ]
     }
@@ -239,24 +248,46 @@ def carBrandsAPIView(request):
 def carListAPIView(request):
     car_type = request.GET.get('car_type',"").lower()
     car_brand = request.GET.get('car_brand',"").lower()
+    page_op = request.GET.get('page_op',"").lower()
     limit = int(request.GET.get('limit',10))
     page = int(request.GET.get('page',1))
     data=[]
-    start_index = limit*(page-1)
-    end_index = limit*(page)
+    
     total_page = 0
     if car_type=="new":
         car_data = CarModel.objects.filter(year__gte=2015,brand=car_brand)
         # print(len(car_brand))
-        data = car_data[start_index:end_index]
+        
         total_page = len(car_data)/4
         total_page = total_page if total_page%4==0 else int(total_page)+1
+        if(page_op == "next"):
+            page+=1
+            if page>total_page:
+                page = total_page
+        elif page_op=="prev":
+            page-=1
+            if page<=0:
+                page = 1
+        start_index = limit*(page-1)
+        end_index = limit*(page)
+        data = car_data[start_index:end_index]
     elif car_type=="old":
         car_data = CarModel.objects.filter(year__lte=2015,brand=car_brand)
-        # print(len(car_data))
-        data = car_data[start_index:end_index]
         total_page = len(car_data)/4
         total_page = total_page if total_page%4==0 else int(total_page)+1
+        total_page = len(car_data)/4
+        total_page = total_page if total_page%4==0 else int(total_page)+1
+        if(page_op == "next"):
+            page+=1
+            if page>total_page:
+                page = total_page
+        elif page_op=="prev":
+            page-=1
+            if page<=0:
+                page = 1
+        start_index = limit*(page-1)
+        end_index = limit*(page)
+        data = car_data[start_index:end_index]
         # print(len(data))
     data = format_carousals(data,page,total_page)
     return JsonResponse(data,status=200,safe=False)
