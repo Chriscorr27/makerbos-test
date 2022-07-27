@@ -371,7 +371,7 @@ def bookApointmentAPIView(request):
                             "type":"url",
                             "url":"https://www.cardekho.com/carmodels/{}/{}".format(car_json["brand"],car_json["model"]),
                             "webview_height":"new",
-                            "title":"Check Mail",
+                            "title":"Check Car",
                             }
                         ]
                         }
