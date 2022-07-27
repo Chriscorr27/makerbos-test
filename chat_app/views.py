@@ -1,3 +1,4 @@
+import json
 import random
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -193,10 +194,9 @@ def sendmessageAPIView(request):
 @api_view(["GET"])
 def attributeAPIView(request):
     attr = request.GET.get('attr',"")
-    data = [{
-            "template_type":"set_attr",
-            "attributes":[
-                {"attribute":"attr", "value": attr}
-                ]
-        }]
+    data = [
+    {"__display":"India", "code":"+91" },
+    {"__display":"US", "code":"+1" },
+    {"__display":"China", "code":"+86" }
+]
     return JsonResponse(data,status=200)
