@@ -9,31 +9,32 @@ import requests as req
 from .models import *
 import xmltodict
 
-def format_carousals(cars):								
-	slides = []								
-	for i in cars[:9]:							
-		slides.append({						
-				"title":i["car_name"],
-				"subtitle":i["car_name"] +" "+ str(i["price"])+" Lakh "+"({})".format(i["engine"]),
-				"image_url":i["img"],
-                "buttons":[ 
-                    {
-                    "type":"url",
-                    "url":i["img"],
-                    "webview_height":"new",
-                    "title":"Preview"
-                    }
+def format_carousals(cars,isNext=False,isprev=False):								
+    slides = []								
+    for car in cars:	
+        i =  car.toJson()					
+        slides.append({						
+            "title":i["brand"]+" "+i["model"] ,
+            "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
+            "image_url":i["image"],
+            "buttons":[ 
+                {
+                "type":"url",
+                "url":i["image"],
+                "webview_height":"new",
+                "title":"Preview"
+                }
+            ]
+            })
+    return {
+        "entries":[
+        {
+        "template_type":"carousel",
+        "shadow":True,
+        "slides":slides	
+        }
                 ]
-				})
-	return {
-		"entries":[
-		{
-		"template_type":"carousel",
-		"shadow":True,
-		"slides":slides	
-		}
-				]
-	}
+    }
 
 def getCarByQuery(query="",car_name="",price="",engine=""):
     cars = getData()
@@ -212,21 +213,46 @@ def carBrandsAPIView(request):
     return JsonResponse(data,status=200,safe=False)
 
 @api_view(["GET"])
+def carBrandsAPIView(request):
+    car_type = request.GET.get('car_type',"")
+    data=[]
+    if car_type=="new":
+        cars_brand = CarModel.objects.filter(year__gte=2015).values('brand').distinct()
+        # print(cars_brand)
+        for brand in cars_brand:
+            data.append( {"__display":brand["brand"], "code":brand["brand"].lower() },)
+    elif car_type=="old":
+        cars_brand = CarModel.objects.filter(year__lte=2015).values('brand').distinct()
+        # print(cars_brand)
+        for brand in cars_brand:
+            data.append( {"__display":brand["brand"], "code":brand["brand"].lower() },)
+    return JsonResponse(data,status=200,safe=False)
+
+@api_view(["GET"])
+def carListAPIView(request):
+    car_type = request.GET.get('car_type',"").lower()
+    car_brand = request.GET.get('car_brand',"").lower()
+    limit = int(request.GET.get('limit',10))
+    page = int(request.GET.get('page',1))
+    data=[]
+    start_index = limit*(page-1)
+    end_index = limit*(page)
+    if car_type=="new":
+        car_data = CarModel.objects.filter(year__gte=2015,brand=car_brand)
+        # print(len(car_brand))
+        data = car_data[start_index:end_index]
+    elif car_type=="old":
+        car_data = CarModel.objects.filter(year__lte=2015,brand=car_brand)
+        # print(len(car_data))
+        data = car_data[start_index:end_index]
+        # print(len(data))
+    data = format_carousals(data)
+    return JsonResponse(data,status=200,safe=False)
+
+@api_view(["GET"])
 def collectCars(request):
-    cars = CarModel.objects.filter(year__lte=2015)
-    count = round(len(cars)*0.4)
-    while(count>0):
-        index = random.randint(0,len(cars)-1)
-        if cars[index].oil_type=="Petrol":
-            cars[index].oil_type = "Diesel"
-            cars[index].save()
-            count-=1
-    cars = CarModel.objects.filter(year__gt=2015)
-    count = round(len(cars)*0.4)
-    while(count>0):
-        index = random.randint(0,len(cars)-1)
-        if cars[index].oil_type=="Petrol":
-            cars[index].oil_type = "Diesel"
-            cars[index].save()
-            count-=1
+    cars = CarModel.objects.all()
+    for car in cars:
+        car.brand = car.brand.lower()
+        car.save()
     return JsonResponse({"msg":"collected"},status=200,safe=False)

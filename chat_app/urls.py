@@ -9,5 +9,6 @@ urlpatterns = [
     path('button/',buttonAPIView,name="button"),
     path('send_message/',sendmessageAPIView,name="send message"),
     path('car-brand/',carBrandsAPIView,name="car_brand"),
-    path('collect_data/',collectCars,name="car_brand"),
+    path('car-list/',carListAPIView,name="car_list"),
+    path('collect_data/',collectCars,name="collect_data"),
 ]
