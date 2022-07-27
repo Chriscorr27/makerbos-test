@@ -31,8 +31,8 @@ def format_carousals(cars,page=0,total=0):
                 "title":"Detail",
                 "attributes":[
                 {
-                "attribute":"page",
-                "value":str(page)
+                "attribute":"car_id",
+                "value":"57"
                 }
             ]
                 }
