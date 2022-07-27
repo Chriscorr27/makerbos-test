@@ -15,7 +15,7 @@ class CarModel(models.Model):
     oil_type = models.CharField(max_length=255,default="Petrol")
 
     def __str__(self) -> str:
-        return self.brand+" "+self.model+" ({} Lakh)".format(self.price)
+        return str(self.id)+" "+self.brand+" "+self.model+" ({} Lakh)".format(self.price)
     
     def toJson(self):
         return {

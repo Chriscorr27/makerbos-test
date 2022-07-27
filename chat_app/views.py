@@ -12,7 +12,7 @@ import xmltodict
 def getCarDetail(car):
     i =  car.toJson()	
     detail_card = "<img src='{}' style='background-color: rgb(156, 154, 154);'  class='card-img-top' alt='...'><h3 >{}</h3><p >{}</p>".format(i["image"],i["brand"]+" "+i["model"],str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]))
-    return ""			
+    return detail_card			
 
 
 def format_carousals(cars,page=0,total=0):								
@@ -307,8 +307,10 @@ def collectCars(request):
 @api_view(["GET"])
 def carDetailAPIView(request):
     car_id = request.GET.get('car_id',"")
+    # print(car_id)
     data={}
     car = CarModel.objects.filter(id=car_id).first()
+    # print(car)
     if car:
         data={
                 "entries":[
