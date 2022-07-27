@@ -364,7 +364,7 @@ def bookApointmentAPIView(request):
                         "buttons":[ 
                         {
                         "type":"url",
-                        "url":"https://mail.google.com/mail/u/0/#inbox",
+                        "url":"https://mail.google.com/mail",
                         "title":"Check Mail",
                         }
                     ]
