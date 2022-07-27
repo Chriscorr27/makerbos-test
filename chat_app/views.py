@@ -213,38 +213,20 @@ def carBrandsAPIView(request):
 
 @api_view(["GET"])
 def collectCars(request):
-    headers = {
-        "X-RapidAPI-Key": "55b6689c46msh94bae1227dbe83dp1b4268jsnb7b812a6f9fd",
-        "X-RapidAPI-Host": "car-data.p.rapidapi.com"
-    }
-    url = "https://car-data.p.rapidapi.com/cars"
-    querystring = {"limit":"10","page":"0","year":"2010","make":"BMW"}
-    response = req.request("GET", url, headers=headers,params=querystring)
-    data = json.loads(response.text)
-    print(data)
-    seats_list = [5,7]
-    count =0
-    for d in data:
-        if  count<7:
-            req_url ="http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm={}+{}+{}".format(d["make"],d["model"],d["year"])
-            img_res = req.request("GET",req_url , headers=headers,params=querystring)
-            img_res = xmltodict.parse(img_res.text)
-            image = img_res["string"]["#text"]
-            # print(image)
-            seats = random.randint(0,1)
-            seats = seats_list[seats]
-            engine = random.randint(1800,2000)
-            price = 0
-            # image = ""
-            if seats==5:
-                price = round(random.randint(120,240)*100/3)/100
-            elif seats==7:
-                price = round(random.randint(180,330)*100/3)/100
-            else:
-                price = round(random.randint(45,80)*100/3)/100
-            price = round(price*0.65*100)/100
-            car = CarModel(year=d["year"],brand=d["make"],model=d["model"],
-            type=d["type"][0],price=price,engine=engine,seats=seats,image=image)
-            # car.save()
-            count+=1
+    cars = CarModel.objects.filter(year__lte=2015)
+    count = round(len(cars)*0.4)
+    while(count>0):
+        index = random.randint(0,len(cars)-1)
+        if cars[index].oil_type=="Petrol":
+            cars[index].oil_type = "Diesel"
+            cars[index].save()
+            count-=1
+    cars = CarModel.objects.filter(year__gt=2015)
+    count = round(len(cars)*0.4)
+    while(count>0):
+        index = random.randint(0,len(cars)-1)
+        if cars[index].oil_type=="Petrol":
+            cars[index].oil_type = "Diesel"
+            cars[index].save()
+            count-=1
     return JsonResponse({"msg":"collected"},status=200,safe=False)

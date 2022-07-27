@@ -11,6 +11,7 @@ class CarModel(models.Model):
     engine = models.IntegerField()
     seats = models.IntegerField()
     image = models.CharField(max_length=255)
+    oil_type = models.CharField(max_length=255,default="Petrol")
 
     def __str__(self) -> str:
         return self.brand+" "+self.model+" ({} Lakh)".format(self.price)
