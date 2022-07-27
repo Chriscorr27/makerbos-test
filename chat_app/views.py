@@ -48,6 +48,12 @@ def format_carousals(cars,page=0,total=0):
                 "value":str(page)
                 }
             ]
+        },
+        {
+            "template_type":"image",
+            "url":"http://www.regcheck.org.uk/image.aspx/@Qk1XIFgzIDIwMjA=",
+            "background_color": "#fff",
+            "caption": "ok"
         }
         ]
     }

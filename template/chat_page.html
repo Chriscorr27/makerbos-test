@@ -1,57 +1,18 @@
-{% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>hello</h1>
-    <!-- <script
-    id="makerobos_v1" 
-    type="text/javascript" 
-    data-token="F17WMMCW51FADTU8QF5G37XCZPDUIQWX" 
-    src="{% static 'makerbos.js' %}"> 
-    </script>-->
-<script
-id="makerobos_v1" 
-type="text/javascript" 
-data-token="F17WMMCW51FADTU8QF5G37XCZPDUIQWX" 
-src="https://link.makerobos.com/DEVJS09">
-   
-</script>
-
-<script>
-    // console.log("ok",mkos);
-    var socket = new WebSocket("wss://dev.backend.makerobos.com/socket/U-SOA1CUWFN2T3FF56VNDF2FR2S59T/");
-    console.log(socket);
-    socket.onopen = function (e) {
-            console.log("socket open",e)
-          }
-    socket.onmessage = function (e) {
-            e = JSON.parse(e.data);
-            console.log(e);
-            // e.agent_message &&
-            //   (s.agent_messages.push(e.agent_message),
-            //   localStorage.getItem("mkos_user_id_" + s.widget.bot) ||
-            //     s.sendMessage({
-            //       type: "create_mau_by_agent",
-            //       agent_id: e.agent_id,
-            //     }));
-          };
-    socket.onclose = function (e) {
-              console.error("Chat socket closed unexpectedly")
-              console.log("reconnecting..")
-              
-          }
-    socket.addEventListener("message",function(e){
-        console.log(e);
-    })
-    // socket.send("hello")
-
-</script>
-
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+  </head>
+  <body>
+    <div class="card" style="width: 300px;">
+        <img src="http://www.regcheck.org.uk/image.aspx/@Qk1XIFgzIDIwMjA=" width="300" height="200" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+  </body>
 </html>
