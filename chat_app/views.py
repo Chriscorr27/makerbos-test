@@ -194,11 +194,10 @@ def sendmessageAPIView(request):
 def attributeAPIView(request):
     attr = request.GET.get('attr',"")
     data = {
-        "entries":[{
-            "template_type":"set_attr",
-            "attributes":[
-                {"attribute":"attr", "value": attr}
-                ]
-        }]
+        "entries":[
+    {"__display":"India", "code":"+91" },
+    {"__display":"US", "code":"+1" },
+    {"__display":"China", "code":"+86" }
+]
     }
     return JsonResponse(data,status=200)
