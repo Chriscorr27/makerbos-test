@@ -378,3 +378,45 @@ def bookApointmentAPIView(request):
                     ]
         }
     return JsonResponse(data,status=200,safe=False)
+
+@api_view(["GET"])
+def getPeopleCountAPIView(request):
+    car_type = request.GET.get('car_type',"").lower()
+    # print(car_id)
+    data={}
+    quick_reply = []
+    if car_type=='new':
+        car_seats = CarModel.objects.filter(year__gt=2015).values('seats').distinct()
+        for car_seat in car_seats:
+            if car_seat["seats"]==5:
+                quick_reply.append({"name":"upto 5","new_states":[]})
+            elif car_seat["seats"]==7:
+                quick_reply.append({"name":"upto 7","new_states":[]})
+            else:
+                quick_reply.append({"name":"7+","new_states":[]})
+    elif car_type=='old':
+        car_seats = CarModel.objects.filter(year__lte=2015).values('seats').distinct()
+        for car_seat in car_seats:
+            if car_seat["seats"]==5:
+                quick_reply.append({"name":"upto 5","new_states":[]})
+            elif car_seat["seats"]==7:
+                quick_reply.append({"name":"upto 7","new_states":[]})
+            else:
+                quick_reply.append({"name":"7+","new_states":[]})
+    data = {
+        "entries":[
+            {
+                "template_type":"message",
+                "message":"How many people do you have in your family?",
+            },{
+                "attribute": "people_count",
+                "attribute_valid": True,
+                "display_vertical": True,
+                "invalid": False,
+                "quick_reply":quick_reply,
+                "template_type":"quick_reply",
+            }
+        ]
+    }
+    
+    return JsonResponse(data,status=200,safe=False)
