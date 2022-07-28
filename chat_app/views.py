@@ -283,10 +283,10 @@ def carListAPIView(request):
         query.append("brand=='{}'".format(car_brand))
     if car_price!="" and re.search(reg_pattern,car_price):
         min_price,max_price = car_price.split("-")
-        if min_price>0:
-            query.append("price>='{}'".format(min_price))
-        if max_price<60:
-            query.append("price<='{}'".format(max_price))
+        if int(min_price)>0:
+            query.append("price>={}".format(int(min_price)))
+        if int(max_price)<60:
+            query.append("price<={}".format(int(max_price)))
     car_data = CarModel.objects.extra(where=query)
     total_page = len(car_data)/4
     total_page = total_page if total_page%4==0 else int(total_page)+1
