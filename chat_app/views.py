@@ -396,13 +396,13 @@ def filterCars(car_type,people_count,budget,uses):
     elif people_count.lower()=='7+':
         query.append("seats>'{}'".format(7))
     
-    if budget.lower()=='upto 10L':
+    if budget.lower()=='upto 10l':
         query.append("price<='{}'".format(10))
-    elif budget.lower()=='upto 20L':
+    elif budget.lower()=='upto 20l':
         query.append("price<='{}'".format(20))
-    elif budget.lower()=='upto 40L':
+    elif budget.lower()=='upto 40l':
         query.append("price<='{}'".format(40))
-    elif budget.lower()=='upto 60L':
+    elif budget.lower()=='upto 60l':
         query.append("price<='{}'".format(60))
     cars = CarModel.objects.extra(where=query)
     diesel_car = []
