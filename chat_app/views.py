@@ -15,7 +15,9 @@ import xmltodict
 
 def getCarDetail(car):
     i =  car.toJson()	
-    desc = "Citroen C3 is a 5 seater Hatchback available in a price range of ₹ 5.71 - 8.06 Lakh. It is available in 6 variants, 1198 to 1199 cc engine options and 1 transmission option : Manual. Other key specifications of the C3 include a Ground Clearance of 180 mm, Kerb Weight of 939 kg and Bootspace of 315 litres. The C3 is available in 10 colours. The mileage of C3 ranges from 19.4 kmpl to 19.8 kmpl."
+    desc = "{brand} {model} is a {seat} seater Hatchback available in a price of ₹ {price} Lakh. It is available in 6 variants, {engine} cc engine options and 1 transmission option : Manual with {oil_type} variant. Other key specifications of the {model} include a Ground Clearance of 180 mm, Kerb Weight of 939 kg and Bootspace of 315 litres. The {model} is available in 10 colours. The mileage of {model} ranges from 19.4 kmpl to 19.8 kmpl.".format(
+        brand=i["brand"],model=i["model"],seat=i["seats"],price=i["price"],engine=i["engine"],oil_type=i["oil_type"]
+    )
     detail_card = "<img src='{}' style='background-color: rgb(156, 154, 154);'  class='card-img-top' alt='...'><h3 >{}</h3><p >{}</p><br><p >{}</p>".format(i["image"],i["brand"]+" "+i["model"],str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),desc)
     return detail_card			
 
@@ -447,7 +449,18 @@ def getSuggestionsAPIView(request):
     start_index = limit*(page-1)
     end_index = limit*(page)
     data = cars[start_index:end_index]
-    data = format_carousals(data,page,total_page)
+    print(data)
+    if len(data)>1:
+        data = format_carousals(data,page,total_page)
+    else:
+        data = {
+           "entries":[
+            {
+                "template_type":"message",
+                "message":"Sorry we dont find any result",
+            }
+        ]
+        }
     return JsonResponse(data,status=200,safe=False)
     
 @api_view(["GET"])

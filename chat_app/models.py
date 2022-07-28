@@ -24,6 +24,7 @@ class CarModel(models.Model):
             "brand":self.brand,
             "model":self.model,
             "type":self.type,
+            "oil_type":self.oil_type,
             "price":self.price,
             "engine":self.engine,
             "desc":self.desc,
