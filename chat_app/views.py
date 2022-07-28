@@ -12,6 +12,7 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import xmltodict
+import re
 
 def getCarDetail(car):
     i =  car.toJson()	
@@ -262,49 +263,44 @@ def carBrandsAPIView(request):
 
 @api_view(["GET"])
 def carListAPIView(request):
+    reg_pattern = "^\d+-\d+$"
     car_type = request.GET.get('car_type',"").lower()
     car_brand = request.GET.get('car_brand',"").lower()
+    car_price = request.GET.get('car_price',"").lower()
     page_op = request.GET.get('page_op',"").lower()
     limit = int(request.GET.get('limit',10))
     page = int(request.GET.get('page',1))
     data=[]
-    
     total_page = 0
-    if car_type=="new":
-        car_data = CarModel.objects.filter(year__gte=2015,brand=car_brand)
-        # print(len(car_brand))
-        
-        total_page = len(car_data)/4
-        total_page = total_page if total_page%4==0 else int(total_page)+1
-        if(page_op == "next"):
-            page+=1
-            if page>total_page:
-                page = total_page
-        elif page_op=="prev":
-            page-=1
-            if page<=0:
-                page = 1
-        start_index = limit*(page-1)
-        end_index = limit*(page)
-        data = car_data[start_index:end_index]
-    elif car_type=="old":
-        car_data = CarModel.objects.filter(year__lte=2015,brand=car_brand)
-        total_page = len(car_data)/4
-        total_page = total_page if total_page%4==0 else int(total_page)+1
-        total_page = len(car_data)/4
-        total_page = total_page if total_page%4==0 else int(total_page)+1
-        if(page_op == "next"):
-            page+=1
-            if page>total_page:
-                page = total_page
-        elif page_op=="prev":
-            page-=1
-            if page<=0:
-                page = 1
-        start_index = limit*(page-1)
-        end_index = limit*(page)
-        data = car_data[start_index:end_index]
-        # print(len(data))
+    query=[]
+    if car_type=='new':
+        car_type_query = "year>'{}'".format(2015)
+        query.append(car_type_query)
+    elif car_type=='old':
+        car_type_query = "year<='{}'".format(2015)
+        query.append(car_type_query)
+    if car_brand!="":
+        query.append("brand=='{}'".format(car_brand))
+    if car_price!="" and re.search(reg_pattern,car_price):
+        min_price,max_price = car_price.split("-")
+        if min_price>0:
+            query.append("price>='{}'".format(min_price))
+        if max_price<60:
+            query.append("price<='{}'".format(max_price))
+    car_data = CarModel.objects.extra(where=query)
+    total_page = len(car_data)/4
+    total_page = total_page if total_page%4==0 else int(total_page)+1
+    if(page_op == "next"):
+        page+=1
+        if page>total_page:
+            page = total_page
+    elif page_op=="prev":
+        page-=1
+        if page<=0:
+            page = 1
+    start_index = limit*(page-1)
+    end_index = limit*(page)
+    data = car_data[start_index:end_index]
     data = format_carousals(data,page,total_page)
     return JsonResponse(data,status=200,safe=False)
 
