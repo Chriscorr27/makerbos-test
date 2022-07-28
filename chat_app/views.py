@@ -288,6 +288,7 @@ def carListAPIView(request):
         if int(max_price)<60:
             query.append("price<={}".format(int(max_price)))
     car_data = CarModel.objects.extra(where=query)
+    car_data.sort(key=lambda x: x.price, reverse=True)
     total_page = len(car_data)/4
     total_page = total_page if total_page%4==0 else int(total_page)+1
     if(page_op == "next"):
