@@ -379,6 +379,77 @@ def bookApointmentAPIView(request):
         }
     return JsonResponse(data,status=200,safe=False)
 
+def filterCars(car_type,people_count,budget,uses):
+    cars=[]
+    query=[]
+    if car_type=='new':
+        car_type_query = "year>'{}'".format(2015)
+        query.append(car_type_query)
+    elif car_type=='old':
+        car_type_query = "year<='{}'".format(2015)
+        query.append(car_type_query)
+    
+    if people_count.lower()=='5+':
+        query.append("seats>'{}'".format(5))
+    elif people_count.lower()=='7+':
+        query.append("seats>'{}'".format(7))
+    
+    if budget.lower()=='upto 10L':
+        query.append("price<='{}'".format(10))
+    elif budget.lower()=='upto 20L':
+        query.append("price<='{}'".format(20))
+    elif budget.lower()=='upto 40L':
+        query.append("price<='{}'".format(40))
+    elif budget.lower()=='upto 60L':
+        query.append("price<='{}'".format(60))
+    cars = CarModel.objects.extra(where=query)
+    diesel_car = []
+    petrol_car = []
+    for car in cars:
+        if car.oil_type.lower()=="diesel":
+            diesel_car.append(car)
+        elif car.oil_type.lower()=="petrol":
+            petrol_car.append(car)
+    if uses.lower()=="everyday" and len(diesel_car)<10:
+        i=0
+        while len(diesel_car)<10 and len(petrol_car)>i:
+            diesel_car.append(petrol_car[i])
+            i+=1
+        cars = diesel_car
+    elif uses.lower()=="weekend" and len(petrol_car)<10:
+        i=0
+        while len(petrol_car)<10 and len(diesel_car)>i:
+            petrol_car.append(diesel_car[i])
+            i+=1
+        cars = petrol_car
+    return cars
+
+@api_view(["GET"])
+def getSuggestionsAPIView(request):
+    car_type = request.GET.get('car_type',"")
+    people_count = request.GET.get('people_count',"")
+    budget = request.GET.get('budget',"")
+    uses = request.GET.get('uses',"")
+    page_op = request.GET.get('page_op',"").lower()
+    limit = int(request.GET.get('limit',10))
+    page = int(request.GET.get('page',1))
+    cars = filterCars(car_type,people_count,budget,uses)
+    total_page = len(cars)/4
+    total_page = total_page if total_page%4==0 else int(total_page)+1
+    if(page_op == "next"):
+        page+=1
+        if page>total_page:
+            page = total_page
+    elif page_op=="prev":
+        page-=1
+        if page<=0:
+            page = 1
+    start_index = limit*(page-1)
+    end_index = limit*(page)
+    data = cars[start_index:end_index]
+    data = format_carousals(data,page,total_page)
+    return JsonResponse(data,status=200,safe=False)
+    
 @api_view(["GET"])
 def getPeopleCountAPIView(request):
     car_type = request.GET.get('car_type',"").lower()
