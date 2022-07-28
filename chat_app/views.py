@@ -409,10 +409,12 @@ def getPeopleCountAPIView(request):
                 "template_type":"message",
                 "message":"How many people do you have in your family?",
             },{
-                "template_type":"quick_reply",
-                "quick_reply":quick_reply,
-                "attribute": "people_count",
-                "display_vertical": True   
+                "template_type": "range",
+                "max": 100,
+                "min": 50,
+                "title": "Pick range",
+                "type": "single",
+                "allow_skip": False
             }
         ]
     }
