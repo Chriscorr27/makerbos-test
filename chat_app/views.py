@@ -29,31 +29,32 @@ def format_carousals(cars,page=0,total=0):
         i =  car.toJson()	
         slides.append({						
             "title":i["brand"]+" "+i["model"] ,
-            "preview": 'landscape', 
-            "card_style": "slideshow",
-            "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
+            # "preview": 'landscape', 
+            # "card_style": "slideshow",
+            # "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
             "image_url":i["image"],
             "url":"https://www.cardekho.com/{}/{}".format(i["brand"],i["model"]),
-            "buttons":[ 
-                {
-                "type":"go_to",
-                "next_block":"car_deatil",
-                "title":"Detail",
-                "attrs":[
-                {
-                "name":"car_id",
-                "value":str(i["id"])
-                }
-            ]
-                }
-            ]
+            # "buttons":[ 
+            #     {
+            #     "type":"go_to",
+            #     "next_block":"car_deatil",
+            #     "title":"Detail",
+            #     "attrs":[
+            #     {
+            #     "name":"car_id",
+            #     "value":str(i["id"])
+            #     }
+            # ]
+            #     }
+            # ]
             })
     return {
         "entries":[
         {
         "template_type":"carousel",
         "shadow":True,
-        "slides":slides	
+        "card_style": "slideshow",
+        "slideshow":slides	
         },
         {
             "template_type":"message",
