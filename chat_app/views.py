@@ -50,6 +50,7 @@ def format_carousals(cars,page=0,total=0):
         "entries":[
         {
         "template_type":"carousel",
+        "card_style": "slideshow",
         "shadow":True,
         "slides":slides	
         },
