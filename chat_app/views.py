@@ -29,8 +29,8 @@ def format_carousals(cars,page=0,total=0):
         i =  car.toJson()	
         slides.append({						
             "title":i["brand"]+" "+i["model"] ,
-            # "preview": 'landscape', 
-            # "card_style": "slideshow",
+            "preview": 'landscape', 
+            "card_style": "slideshow",
             # "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
             "image_url":i["image"],
             "url":"https://www.cardekho.com/{}/{}".format(i["brand"],i["model"]),
@@ -54,7 +54,8 @@ def format_carousals(cars,page=0,total=0):
         "template_type":"carousel",
         "shadow":True,
         "card_style": "slideshow",
-        "slideshow":slides	
+        "preview": 'landscape', 
+        "slides":slides	
         },
         {
             "template_type":"message",
