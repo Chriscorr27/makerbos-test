@@ -31,7 +31,7 @@ def format_carousals(cars,page=0,total=0):
             "title":i["brand"]+" "+i["model"] ,
             "preview": 'landscape', 
             "card_style": "slideshow",
-            # "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
+            "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
             "image_url":i["image"],
             "url":"https://www.cardekho.com/{}/{}".format(i["brand"],i["model"]),
             # "buttons":[ 
