@@ -47,7 +47,7 @@ def format_carousals(cars,page=0,total=0,car_type=0):
             "title":i["brand"]+" "+i["model"] ,
             "preview": 'landscape', 
             "card_style": car_types[car_type],
-            "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]) if car_type!=1 else "",
+            "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
             "image_url":i["image"],
             "url":"https://www.cardekho.com/{}/{}".format(i["brand"],i["model"]),
             "buttons":buttons
