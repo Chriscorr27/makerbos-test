@@ -312,7 +312,7 @@ def carListAPIView(request):
     end_index = limit*(page)
     data = car_data[start_index:end_index]
     car_type = random.randint(0,2)
-    data = format_carousals(data,page,total_page,car_type)
+    data = format_carousals(data,page,total_page,2)
     return JsonResponse(data,status=200,safe=False)
 
 @api_view(["GET"])
