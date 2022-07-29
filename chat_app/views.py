@@ -23,37 +23,41 @@ def getCarDetail(car):
     return detail_card			
 
 
-def format_carousals(cars,page=0,total=0):								
+def format_carousals(cars,page=0,total=0,car_type=0):	
+    car_types = ["carousel","slideshow","infocard"]
     slides = []								
     for car in cars:	
         i =  car.toJson()	
+        buttons = []
+        if car_type!=1:
+            buttons = [ 
+                {
+                "type":"go_to",
+                "next_block":"car_deatil",
+                "title":"Detail",
+                "attrs":[
+                {
+                "name":"car_id",
+                "value":str(i["id"])
+                }
+            ]
+                }
+            ]
         slides.append({						
             "title":i["brand"]+" "+i["model"] ,
             "preview": 'landscape', 
-            "card_style": "slideshow",
-            "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
+            "card_style": car_types[car_type],
+            "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]) if car_type!=1 else "",
             "image_url":i["image"],
             "url":"https://www.cardekho.com/{}/{}".format(i["brand"],i["model"]),
-            # "buttons":[ 
-            #     {
-            #     "type":"go_to",
-            #     "next_block":"car_deatil",
-            #     "title":"Detail",
-            #     "attrs":[
-            #     {
-            #     "name":"car_id",
-            #     "value":str(i["id"])
-            #     }
-            # ]
-            #     }
-            # ]
+            "buttons":buttons
             })
     return {
         "entries":[
         {
         "template_type":"carousel",
         "shadow":True,
-        "card_style": "slideshow",
+        "card_style": car_types[car_type],
         "preview": 'landscape', 
         "slides":slides	
         },
@@ -307,7 +311,8 @@ def carListAPIView(request):
     start_index = limit*(page-1)
     end_index = limit*(page)
     data = car_data[start_index:end_index]
-    data = format_carousals(data,page,total_page)
+    car_type = random.randint(0,2)
+    data = format_carousals(data,page,total_page,car_type)
     return JsonResponse(data,status=200,safe=False)
 
 @api_view(["GET"])
