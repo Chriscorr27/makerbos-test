@@ -30,7 +30,7 @@ def format_carousals(cars,page=0,total=0):
         slides.append({						
             "title":i["brand"]+" "+i["model"] ,
             "preview": 'landscape', 
-            "card_style": "carousel",
+            "card_style": "slideshow",
             "subtitle":str(i["price"])+" Lakh "+"({}) - {} seater".format(i["engine"],i["seats"]),
             "image_url":i["image"],
             "url":"https://www.cardekho.com/{}/{}".format(i["brand"],i["model"]),
