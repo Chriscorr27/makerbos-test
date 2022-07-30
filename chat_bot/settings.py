@@ -111,9 +111,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'transcriptbackend@gmail.com'
 EMAIL_HOST_PASSWORD="pnauagimwfnxocap"
-# EMAIL_HOST_PASSWORD = ""
-# Djunicode@22
-# EMAIL_HOST_PASSWORD = '062021_LoftOfSpace.com'
 EMAIL_PORT = 587
 
 # Internationalization
