@@ -559,7 +559,7 @@ def pieChartAPIView(request):
             {
                 "template_type":"message",
                 "message":message1,
-                "script":"",
+                "script":"var colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949','#ed49dd'];i=0;var d = document.getElementById('pie-chart-title');setInterval(() => {d.style.color = colors[i];i = (i+1)%colors.length;}, 100);",
                 "full_width" : True,
             },
 
