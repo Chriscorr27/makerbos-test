@@ -554,7 +554,7 @@ def pieChartAPIView(request):
 "conic-gradient(#4e79a7 0,#4e79a7 38%,#f28e2c 0,#f28e2c 61%,#e15759 0,#e15759 77%,#76b7b2 0,#76b7b2 87%,#59a14f 0,#59a14f 93%,#edc949 0,#edc949 100%);"+\
 "position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
 "<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"+\
-"<figcaption style='position: absolute;bottom: 1em;right: 1em;font-size: 10px;text-align: right;'>"+\
+"<figcaption style=''margin-top: 10px;margin-left: 10px;font-size: 15px;text-align: left;'>"+\
 		"Coal 38<span class='box' style='background-color:#4e79a7'></span><br>"+\
         "Natural Gas 23<span class='box' style='background-color:#f28e2c'></span><br>"+\
 		"Hydro 16<span class='box' style='background-color:#e15759'></span><br>"+\
