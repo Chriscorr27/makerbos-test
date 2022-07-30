@@ -514,7 +514,7 @@ def getPeopleCountAPIView(request):
 
 @api_view(["GET"])
 def pieChartAPIView(request):
-    return {
+    data = {
         "entries":[
             {
                 "template_type":"message",
@@ -523,3 +523,4 @@ def pieChartAPIView(request):
             }
         ]
     }
+    return JsonResponse(data,status=200)
