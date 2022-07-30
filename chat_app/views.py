@@ -532,7 +532,7 @@ def getPieHtml():
     conic_gradient = "conic-gradient("
     spans = ""
     for data in prep_data_list:
-        spans+="<span class='box' style='background-color:{}'></span> {}<br>".format(data["color"],data["name"])
+        spans+="<span class='box' style='background-color:{};display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span> {}<br>".format(data["color"],data["name"])
         conic_gradient+="{color} 0,{color} {total_value}%,".format(
             color=data["color"],
             total_value=data["total_value"],
@@ -542,7 +542,7 @@ def getPieHtml():
     message+=conic_gradient
     message += "position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
 "<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"
-    message2 = "<figcaption style='margin-top: 10px;margin-left: 10px;font-size: 1px;text-align: left;'>"
+    message2 = "<figcaption style='margin-top: 10px;margin-left: 10px;font-size: 15px;text-align: left;'>"
     message2+=spans+"</figcaption>"
     
     return message,message2
