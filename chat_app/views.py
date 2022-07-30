@@ -555,12 +555,12 @@ def pieChartAPIView(request):
 "position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
 "<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"+\
 "<figcaption style=''margin-top: 10px;margin-left: 10px;font-size: 15px;text-align: left;'>"+\
-		"Coal 38<span class='box' style='background-color:#4e79a7'></span><br>"+\
-        "Natural Gas 23<span class='box' style='background-color:#f28e2c'></span><br>"+\
-		"Hydro 16<span class='box' style='background-color:#e15759'></span><br>"+\
-		"Nuclear 10<span class='box' style='background-color:#76b7b2'></span><br>"+\
-		"Renewable 6<span class='box' style='background-color:#59a14f'></span><br>"+\
-		"Other 7<span class='box' style='background-color:#edc949'></span>"+\
+		"Coal 38<span class='box' style='background-color:#4e79a7;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+        "Natural Gas 23<span class='box' style='background-color:#f28e2c;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+		"Hydro 16<span class='box' style='background-color:#e15759;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+		"Nuclear 10<span class='box' style='background-color:#76b7b2;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+		"Renewable 6<span class='box' style='background-color:#59a14f;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+		"Other 7<span class='box' style='background-color:#edc949;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span>"+\
 	"</figcaption>"
     script = "var boxs = document.getElementsByClassName('box');"+\
     "colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949'];"+\
