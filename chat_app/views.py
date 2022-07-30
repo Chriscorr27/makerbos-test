@@ -533,35 +533,36 @@ def getPieHtml():
     spans = ""
     for data in prep_data_list:
         spans+="<span class='box' style='background-color:{}'></span> {}<br>".format(data["color"],data["name"])
-        conic_gradient+="{color} 0,{color} {total_value},".format(
+        conic_gradient+="{color} 0,{color} {total_value}%,".format(
             color=data["color"],
             total_value=data["total_value"],
         )
-    conic_gradient+=")"
+    conic_gradient = conic_gradient[:-1]
+    conic_gradient+=");"
     message+=conic_gradient
     message += "position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
-"<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"+\
-"<figcaption style='margin-top: 10px;margin-left: 10px;font-size: 1px;text-align: left;'>"
-    message+=spans+"</figcaption>"
+"<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"
+    message2 = "<figcaption style='margin-top: 10px;margin-left: 10px;font-size: 1px;text-align: left;'>"
+    message2+=spans+"</figcaption>"
     
-    print(conic_gradient)
+    return message,message2
     
 
 @api_view(["GET"])
 def pieChartAPIView(request):
-    getPieHtml()
-    message1 = "<h1 id='pie-chart-title'>Pie Chart</h1><figure class='pie-chart' style='background:radial-gradient(circle closest-side,transparent 66%,white 0),"+\
-"conic-gradient(#4e79a7 0,#4e79a7 38%,#f28e2c 0,#f28e2c 61%,#e15759 0,#e15759 77%,#76b7b2 0,#76b7b2 87%,#59a14f 0,#59a14f 93%,#edc949 0,#edc949 100%);"+\
-"position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
-"<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"
-    message2 = "<figcaption style=''margin-top: 10px;margin-left: 10px;font-size: 15px;text-align: left;'>"+\
-            "Coal 38<span class='box' style='background-color:#4e79a7;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
-            "Natural Gas 23<span class='box' style='background-color:#f28e2c;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
-            "Hydro 16<span class='box' style='background-color:#e15759;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
-            "Nuclear 10<span class='box' style='background-color:#76b7b2;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
-            "Renewable 6<span class='box' style='background-color:#59a14f;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
-            "Other 7<span class='box' style='background-color:#edc949;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span>"+\
-        "</figcaption>"
+    message1,message2 = getPieHtml()
+#     message1 = "<h1 id='pie-chart-title'>Pie Chart</h1><figure class='pie-chart' style='background:radial-gradient(circle closest-side,transparent 66%,white 0),"+\
+# "conic-gradient(#4e79a7 0,#4e79a7 15%,#f28e2c 0,#f28e2c 61%,#e15759 0,#e15759 77%,#76b7b2 0,#76b7b2 87%,#59a14f 0,#59a14f 93%,#edc949 0,#edc949 100%);"+\
+# "position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
+# "<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"
+#     message2 = "<figcaption style=''margin-top: 10px;margin-left: 10px;font-size: 15px;text-align: left;'>"+\
+#             "Coal 38<span class='box' style='background-color:#4e79a7;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+#             "Natural Gas 23<span class='box' style='background-color:#f28e2c;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+#             "Hydro 16<span class='box' style='background-color:#e15759;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+#             "Nuclear 10<span class='box' style='background-color:#76b7b2;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+#             "Renewable 6<span class='box' style='background-color:#59a14f;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span><br>"+\
+#             "Other 7<span class='box' style='background-color:#edc949;display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;'></span>"+\
+#         "</figcaption>"
     
     data = {
         "entries":[
