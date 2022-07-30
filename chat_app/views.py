@@ -570,6 +570,12 @@ def pieChartAPIView(request):
                 "message":message1,
                 "script":"",
                 "full_width" : True,
+            },
+            {
+                "template_type":"message",
+                "message":message2,
+                "script":"",
+                "full_width" : True,
             }
         ]
     }
