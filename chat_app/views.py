@@ -563,7 +563,7 @@ def pieChartAPIView(request):
 		"Other 7<span class='box' style='background-color:#edc949'></span>"+\
 	"</figcaption>"
     script = "var boxs = document.getElementsByClassName('box');"+\
-    "colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949'];"\
+    "colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949'];"+\
     "var i=0;for(let box of boxs){var color = box.style.background-color;box.style.cssText=`display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;background-color:${colors[i]};`;i++;}"
     data = {
         "entries":[
