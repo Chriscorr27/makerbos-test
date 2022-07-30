@@ -514,14 +514,25 @@ def getPeopleCountAPIView(request):
 
 @api_view(["GET"])
 def pieChartAPIView(request):
+    message = "<h1 id='pie-chart-title'>Pie Chart</h1><figure class='pie-chart' style='background:radial-gradient(circle closest-side,transparent 66%,white 0),"+\
+"conic-gradient(#4e79a7 0,#4e79a7 38%,#f28e2c 0,#f28e2c 61%,#e15759 0,#e15759 77%,#76b7b2 0,#76b7b2 87%,#59a14f 0,#59a14f 93%,#edc949 0,#edc949 100%);"+\
+"position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'><figcaption style='position: absolute;bottom: 1em;right: 1em;font-size: 10px;text-align: right;'>"+\
+		"Coal 38<span class='box' style='background-color:#4e79a7'></span><br>"+\
+        "Natural Gas 23<span class='box' style='background-color:#f28e2c'></span><br>"+\
+		"Hydro 16<span class='box' style='background-color:#e15759'></span><br>"+\
+		"Nuclear 10<span class='box' style='background-color:#76b7b2'></span><br>"+\
+		"Renewable 6<span class='box' style='background-color:#59a14f'></span><br>"+\
+		"Other 7<span class='box' style='background-color:#edc949'></span>"+\
+	"</figcaption><cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"
+    script = "var boxs = document.getElementsByClassName('box');"+\
+    "colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949'];"\
+    "var i=0;for(let box of boxs){var color = box.style.background-color;box.style.cssText=`display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;background-color:${colors[i]};`;i++;}"
     data = {
         "entries":[
             {
                 "template_type":"message",
-                "message":"<h1 class='pie-chart-title'>Pie Chart</h1><div class='box' style='display: block;width: 150px;height: 150px;border-radius: 50%;"+
-                            "background-image: conic-gradient(pink 70deg, lightblue 0 235deg, orange 0);'></div>"+
-                            "<style> .pie-chart-title{color:'green'}</style>",
-                "script":"var d = document.getElementById('pie-chart-title');d.style.color = 'red';"
+                "message":message,
+                "script":script
             }
         ]
     }
