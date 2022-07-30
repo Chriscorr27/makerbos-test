@@ -14,5 +14,6 @@ urlpatterns = [
     path('people-count/',getPeopleCountAPIView,name="people_count"),
     path('car-suggestion/',getSuggestionsAPIView,name="car_suggestion"),
     path('book-appointment/',bookApointmentAPIView,name="book_appointment"),
+    path('pie-chart/',pieChartAPIView,name="pie_chart"),
     path('collect_data/',collectCars,name="collect_data"),
 ]

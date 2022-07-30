@@ -511,3 +511,15 @@ def getPeopleCountAPIView(request):
     }
     
     return JsonResponse(data,status=200,safe=False)
+
+@api_view(["GET"])
+def pieChartAPIView(request):
+    return {
+        "entries":[
+            {
+                "template_type":"message",
+                "message":"<h1>Pie Chart</h1><div class='' style='display: block;width: 150px;height: 150px;border-radius: 50%;"+
+                            "background-image: conic-gradient(pink 70deg, lightblue 0 235deg, orange 0);'></div>",
+            }
+        ]
+    }
