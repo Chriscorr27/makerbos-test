@@ -514,8 +514,6 @@ def getPeopleCountAPIView(request):
 
 def getPieHtml():
     message = "<h1 id='pie-chart-title'>Pie Chart</h1><figure class='pie-chart' style='background:radial-gradient(circle closest-side,transparent 66%,white 0),"
-    script = "var boxs = document.getElementsByClassName('box');"
-    colors_str = "["
     colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949','#ed49dd']
     data = {"AUDI":15,"BMW":20,"Ford":13,"Toyoto":30,"Honda":6,"Volkswagen":7,"Others":9}
     # sort(key=lambda x: x.count, reverse=True)
@@ -534,28 +532,39 @@ def getPieHtml():
     conic_gradient = "conic-gradient("
     spans = ""
     for data in prep_data_list:
-        colors_str+="'{}',".format(data["color"])
         spans+="<span class='box' style='background-color:{}'></span> {}<br>".format(data["color"],data["name"])
         conic_gradient+="{color} 0,{color} {total_value},".format(
             color=data["color"],
             total_value=data["total_value"],
         )
     conic_gradient+=")"
-    colors_str+="]"
     message+=conic_gradient
     message += "position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
 "<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"+\
 "<figcaption style='margin-top: 10px;margin-left: 10px;font-size: 1px;text-align: left;'>"
     message+=spans+"</figcaption>"
-    script+=colors_str
-    script+="var i=0;for(let box of boxs){var color = box.style.background-color;box.style.cssText=`display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;background-color:${colors[i]};`;i++;}"
-    return message,script
+    
+    print(conic_gradient)
     
 
 @api_view(["GET"])
 def pieChartAPIView(request):
-    
-    message,script = getPieHtml()
+    getPieHtml()
+    message = "<h1 id='pie-chart-title'>Pie Chart</h1><figure class='pie-chart' style='background:radial-gradient(circle closest-side,transparent 66%,white 0),"+\
+"conic-gradient(#4e79a7 0,#4e79a7 38%,#f28e2c 0,#f28e2c 61%,#e15759 0,#e15759 77%,#76b7b2 0,#76b7b2 87%,#59a14f 0,#59a14f 93%,#edc949 0,#edc949 100%);"+\
+"position: relative;width: 320px;height: 250px;margin: 0;outline: 1px solid #ccc;'>"+\
+"<cite style='position: absolute;bottom: 0;font-size: 80%;padding: 1rem;color: gray;'>Makerbos</cite></figure>"+\
+"<figcaption style='position: absolute;bottom: 1em;right: 1em;font-size: 10px;text-align: right;'>"+\
+		"Coal 38<span class='box' style='background-color:#4e79a7'></span><br>"+\
+        "Natural Gas 23<span class='box' style='background-color:#f28e2c'></span><br>"+\
+		"Hydro 16<span class='box' style='background-color:#e15759'></span><br>"+\
+		"Nuclear 10<span class='box' style='background-color:#76b7b2'></span><br>"+\
+		"Renewable 6<span class='box' style='background-color:#59a14f'></span><br>"+\
+		"Other 7<span class='box' style='background-color:#edc949'></span>"+\
+	"</figcaption>"
+    script = "var boxs = document.getElementsByClassName('box');"+\
+    "colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949'];"\
+    "var i=0;for(let box of boxs){var color = box.style.background-color;box.style.cssText=`display: inline-block;width: 0.8em;height: 0.8em;margin-left: 0.4em;height: 0.8em;border-radius: 0.2em;background-color:${colors[i]};`;i++;}"
     data = {
         "entries":[
             {
