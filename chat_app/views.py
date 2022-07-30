@@ -559,7 +559,7 @@ def pieChartAPIView(request):
             {
                 "template_type":"message",
                 "message":message1,
-                "script":"var colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949','#ed49dd'];i=0;var d = document.getElementById('pie-chart-title');setInterval(() => {d.style.color = colors[i];i = (i+1);if(i==colors.length) i=0;}, 100);",
+                "script":"var colors = ['#4e79a7','#f28e2c','#e15759','#76b7b2','#59a14f','#edc949','#ed49dd'];var d = document.getElementById('pie-chart-title');d.style.color = colors[1];",
                 "full_width" : True,
             },
 
