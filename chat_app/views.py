@@ -518,8 +518,9 @@ def pieChartAPIView(request):
         "entries":[
             {
                 "template_type":"message",
-                "message":"<h1 id='pie-chart-title'>Pie Chart</h1><div class='' style='display: block;width: 150px;height: 150px;border-radius: 50%;"+
-                            "background-image: conic-gradient(pink 70deg, lightblue 0 235deg, orange 0);'></div>",
+                "message":"<h1 class='pie-chart-title'>Pie Chart</h1><div class='box' style='display: block;width: 150px;height: 150px;border-radius: 50%;"+
+                            "background-image: conic-gradient(pink 70deg, lightblue 0 235deg, orange 0);'></div>"+
+                            "<style> .pie-chart-title{color:'green'}</style>",
                 "script":"var d = document.getElementById('pie-chart-title');d.style.color = 'red';"
             }
         ]
