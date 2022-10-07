@@ -18,6 +18,6 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('chat_app.urls')),
+    path('meta-proxy', include('meta_proxy.urls')),
 ]
 
